@@ -61,3 +61,4 @@ kubectl apply -f 0-mongo.yml
 # UNFINISHED
 - Functions aren't complete for get/put into Mongo DB
 - Horizontal auto scaler for production env
+- Test scripts (blocked due to functions not complete)
