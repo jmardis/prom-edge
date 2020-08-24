@@ -62,3 +62,9 @@ kubectl apply -f 0-mongo.yml
 - Functions aren't complete for get/put into Mongo DB
 - Horizontal auto scaler for production env
 - Test scripts (blocked due to functions not complete)
+
+## SCREENSHOTS:
+
+![image](https://user-images.githubusercontent.com/12747079/90995929-640cd980-e58b-11ea-8e16-38686d0f891b.png)
+![image](https://user-images.githubusercontent.com/12747079/90996037-a2a29400-e58b-11ea-8449-8982f8d6fd89.png)
+![image](https://user-images.githubusercontent.com/12747079/90996106-c960ca80-e58b-11ea-9932-66db64dfd0a6.png)
