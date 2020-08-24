@@ -1,26 +1,63 @@
-Background
-==========
-911 emergency incident data are sent in nation wide in realtime so that we can provide better analytics to improve fire department operations and public safety.
+# PROM-EDGE Stack
 
-Task
+## Purpose
 ----
-Design a cloud based system for ingesting, enriching, and storing 911 incident data so that they can be used for analytics.
 
-Notes
------
-* Each incident will come in as a json.
-* Example incidents are provided in the data folder.
-* In some cases an incident may unfold over an extended period of time (example: neighborhood burning due to wildfire) in which case the updated incident will be sent in multiple times.
-* Assume AWS infrastructure.
-* Please use AWS free tier or resources with minimal costs to make it practical for both your development and our evaluation.
-* We would like you to try to spend up to 4 hours. It is okay if you spend less time or more time but we would like your response within 24 hours of receiving the email.
-* We understand that this is an open ended project and different engineers may have very different takes on what the deliverable looks like, and that is okay.
+This repo contains the Prom-Edge stack that puts/gets 911 JSON event files and saves it into/from a Mongo DB. Using serverless style functions to provide horizontal autoscaling to meet any demand from incoming events.
 
-Deliverable
------------
-* Link to a github repository which contains everything you are submitting with your commits as you originally made them.
-* Brief explanation of the design, reasoning behind it, and if needed, which parts of the design are covered in what you are submitting.
-* Include your "production" infrastructure as code and anything else that you submit with it.
-* Steps for someone who is not necessarily a devops engineer but technical enough to follow them.
-* Assume the user will be running your steps on a clean centos-7.3 they setup locally.
-* Couple of screenshots that show your project working.
+Explination for design: 
+- Serverless functions provide major factors for automated CI/CD stacks: 1. Ease of development, 2. Production grade scaling.
+
+## Tech Info
+----
+
+Layer 0 (infrastructure): AWS EC2 instance with Centos 7.x
+Layer 1 (platform): Docker/Kubernetes/Kind/Kubeless
+Layer 2 (app): Python functions to read/write to mongo.
+
+### Folder Layout
+----
+
+- 0-setup: contains files for setting up Layer 1 of the architecture.
+- 1-deploy: contains files for deploy functions and backend apps.
+- 2-test: scripts and files for testing functionality
+
+Setup
+----
+
+Pre-reqs:
+- Access to AWS with free tier support. 
+- Created AWS Centos ec2 instance
+- Installed Docker
+- Download kind cli tool: https://kind.sigs.k8s.io/docs/user/quick-start/
+- SSH'ed into free tier EC2 instance
+- Git tool installed
+- Checked out code and changed directory to 0-setup
+
+
+1. Deploy kind cluster:
+```
+kind create cluster --config kind.yaml
+```
+2. Run setup script for kubeless
+```
+./setup_kubeless.sh
+```
+
+## Deploy
+Pre-reqs:
+- Change directory to 1-deploy
+
+1. Deploy mongo
+```
+kubectl apply -f 0-mongo.yml
+```
+
+2. Deploy functions
+```
+./1-deploy.sh
+```
+
+# UNFINISHED
+- Functions aren't complete for get/put into Mongo DB
+- Horizontal auto scaler for production env
